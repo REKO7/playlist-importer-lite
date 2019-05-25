@@ -1,6 +1,6 @@
 {
   "name": "playlist-importer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Return JSON data from playlists on popular music platforms",
   "main": "index.js",
   "scripts": {
