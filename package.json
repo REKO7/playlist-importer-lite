@@ -1,0 +1,54 @@
+{
+  "name": "playlist-importer",
+  "version": "0.1.0",
+  "description": "Return JSON data from playlists on popular music platforms",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/.bin/mocha",
+    "test-watch": "node_modules/.bin/mocha -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enioluwa23/playlist-importer.git"
+  },
+  "keywords": [
+    "music",
+    "playlist",
+    "import",
+    "parse",
+    "json",
+    "spotify",
+    "pandora",
+    "apple music",
+    "apple"
+  ],
+  "author": "Enioluwa Segun",
+  "license": "MIT",
+  "bin": {
+    "playlist-importer": "./cli.js"
+  },
+  "bugs": {
+    "url": "https://github.com/enioluwa23/playlist-importer/issues"
+  },
+  "homepage": "https://github.com/enioluwa23/playlist-importer#readme",
+  "dependencies": {
+    "await-to-js": "^2.1.1",
+    "chalk": "^2.4.2",
+    "commander": "^2.20.0",
+    "html-entities": "^1.2.1",
+    "iconv-lite": "^0.4.24",
+    "jquery": "^3.4.1",
+    "jsdom": "^15.1.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4",
+    "valid-filename": "^3.1.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^5.16.0",
+    "eslint-config-google": "^0.13.0",
+    "eslint-plugin-import": "^2.17.2",
+    "mocha": "^6.1.4"
+  }
+}
