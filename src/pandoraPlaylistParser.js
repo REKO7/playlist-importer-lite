@@ -3,23 +3,17 @@ const Playlist = require('./playlist');
 const Track = require('./track');
 
 class PandoraPlaylistParser extends PlaylistParser {
-  constructor(jQueryInstance, entityDecoder) {
-    super(jQueryInstance, entityDecoder);
+  constructor(jQueryInstance) {
+    super(jQueryInstance);
   }
 
   jQueryToJson(playlist) {
-    const scripts = [];
-    playlist.each((i, item) => {
-      if (item.nodeName === 'SCRIPT')
-        scripts.push(item);
-    });
-    const script = scripts.find((x) => x.textContent.trim().startsWith('var launchUrl = '));
-    let data = script.textContent.trim();
+    const script = playlist('script:contains(var launchUrl = )').get(0);
+    let data = script.firstChild.data.trim();
     const beginString = 'var storeData = ';
     data = data.substring(data.indexOf(beginString) + beginString.length);
     const endIndex = data.indexOf('};');
     data = data.substring(0, endIndex + 1);
-
     return JSON.parse(data);
   }
 
@@ -33,7 +27,7 @@ class PandoraPlaylistParser extends PlaylistParser {
     else
       author = 'Pandora';
 
-    return this.entities.decode(author);
+    return author;
   }
 
   getDescription(playlist) {
@@ -47,7 +41,7 @@ class PandoraPlaylistParser extends PlaylistParser {
       const playlistV1 = playlist['v1/music/genres'];
       description = playlistV1[0].genres[0].description;
     }
-    return this.entities.decode(description);
+    return description;
   }
 
   getPhoto(playlist) {
@@ -78,7 +72,7 @@ class PandoraPlaylistParser extends PlaylistParser {
       const playlistV1 = playlist['v1/music/genres'];
       name = playlistV1[0].genres[0].name;
     }
-    return this.entities.decode(name);
+    return name;
   }
 
   getTracks(playlist) {
@@ -95,8 +89,8 @@ class PandoraPlaylistParser extends PlaylistParser {
         let title = data.name;
         const splitIdx = title.indexOf(' (feat.');
         title = splitIdx !== -1 ? title.substring(0, splitIdx) : title;
-        track.title = this.entities.decode(title);
-        track.artist = this.entities.decode(data.artistName).replace(' & ', ', ');
+        track.title = title;
+        track.artist = data.artistName.replace(' & ', ', ');
         track.length = item.duration;
         track.isExplicit = data.explicitness === 'EXPLICIT';
         tracks.push(new Track(track));
@@ -109,8 +103,8 @@ class PandoraPlaylistParser extends PlaylistParser {
         let title = val.name;
         const splitIdx = title.indexOf(' (feat.');
         title = splitIdx !== -1 ? title.substring(0, splitIdx) : title;
-        track.title = this.entities.decode(title);
-        track.artist = this.entities.decode(val.artistName).replace(' & ', ', ');
+        track.title = title;
+        track.artist = val.artistName.replace(' & ', ', ');
         track.length = val.duration;
         track.isExplicit = val.explicitness === 'EXPLICIT';
         tracks.push(new Track(track));

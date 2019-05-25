@@ -5,12 +5,10 @@ const Playlist = require('./playlist');
  */
 class PlaylistParser {
   /**
-   * @param {JQueryStatic} jQueryInstance
-   * @param {AllHtmlEntities} entityDecoder
+   * @param {JQuery} jQueryInstance
    */
-  constructor(jQueryInstance, entityDecoder) {
+  constructor(jQueryInstance) {
     this.$ = jQueryInstance;
-    this.entities = entityDecoder;
   }
 
   /**

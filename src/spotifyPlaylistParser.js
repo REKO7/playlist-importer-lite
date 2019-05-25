@@ -3,18 +3,13 @@ const Playlist = require('./playlist');
 const Track = require('./track');
 
 class SpotifyPlaylistParser extends PlaylistParser {
-  constructor(jQueryInstance, entityDecoder) {
-    super(jQueryInstance, entityDecoder);
+  constructor(jQueryInstance) {
+    super(jQueryInstance);
   }
 
   jQueryToJson(playlist) {
-    const scripts = [];
-    playlist.each((i, item) => {
-      if (item.nodeName === 'SCRIPT')
-        scripts.push(item);
-    });
-    const script = scripts.find((x) => x.textContent.trim().startsWith('Spotify = {};'));
-    let data = script.textContent.trim();
+    const script = playlist('script:contains(Spotify = {};)').get(0);
+    let data = script.firstChild.data.trim();
     const beginString = 'Spotify.Entity = ';
     data = data.substring(data.indexOf(beginString) + beginString.length).slice(0, -1);
     return JSON.parse(data);
@@ -23,13 +18,13 @@ class SpotifyPlaylistParser extends PlaylistParser {
   getAuthor(playlist) {
     if (playlist.constructor.name === 'jQuery')
       playlist = jQueryToJson(playlist);
-    return this.entities.decode(playlist.owner.display_name);
+    return playlist.owner.display_name;
   }
 
   getDescription(playlist) {
     if (playlist.constructor.name === 'jQuery')
       playlist = jQueryToJson(playlist);
-    return this.entities.decode(playlist.description);
+    return playlist.description;
   }
 
   getPhoto(playlist) {
@@ -39,7 +34,8 @@ class SpotifyPlaylistParser extends PlaylistParser {
     if (undefined === img) {
       if (playlist.images.length > 0)
         return playlist.images[0].url;
-    } else return null;
+      else return null;
+    } else return img.url;
   }
 
   getPlatform() {
@@ -49,7 +45,7 @@ class SpotifyPlaylistParser extends PlaylistParser {
   getTitle(playlist) {
     if (playlist.constructor.name === 'jQuery')
       playlist = jQueryToJson(playlist);
-    return this.entities.decode(playlist.name);
+    return playlist.name;
   }
 
   getTracks(playlist) {
@@ -58,13 +54,13 @@ class SpotifyPlaylistParser extends PlaylistParser {
 
     const tracks = playlist.tracks.items.map((item) => {
       const track = {};
-      let title = this.entities.decode(item.track.name);
+      let title = item.track.name;
       const splitIdx = title.indexOf(' (feat.');
       title = splitIdx !== -1 ? title.substring(0, splitIdx) : title;
-      track.title = this.entities.decode(title);
+      track.title = title;
       track.artist = item.track.artists.reduce((result, x, i) => {
-        if (i === 0) return result + this.entities.decode(x.name);
-        else return result + `, ${this.entities.decode(x.name)}`;
+        if (i === 0) return result + x.name;
+        else return result + `, ${x.name}`;
       }, '');
       track.length = item.track.duration_ms / 1000;
       track.isExplicit = item.track.explicit;

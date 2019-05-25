@@ -1,9 +1,7 @@
 const request = require('request-promise');
 const to = require('await-to-js').to;
-const jsdom = require('jsdom');
-const $ = require('jquery')(new jsdom.JSDOM().window);
+const cheerio = require('cheerio');
 const iconv = require('iconv-lite');
-const entities = new (require('html-entities').AllHtmlEntities);
 const platformChecker = require('./platformChecker');
 const parserFactory = require('./parserFactory');
 
@@ -54,8 +52,8 @@ const getPlaylistData = async (url) => {
   if (null !== rError) throw rError;
 
   body = iconv.decode(Buffer.from(body), 'utf8');
-  body = $(body);
-  const parser = parserFactory.getParser(platform, $, entities);
+  body = cheerio.load(body, { decodeEntities: true });
+  const parser = parserFactory.getParser(platform, body);
   const playlist = parser.parsePlaylist(body);
   return playlist;
 };

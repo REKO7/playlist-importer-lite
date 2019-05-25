@@ -5,15 +5,14 @@ SpotifyPlaylistParser = require('./spotifyPlaylistParser');
 class ParserFactory {
   /**
    * @param {string} platform
-   * @param {JQueryStatic} jQueryStatic
-   * @param {AllHtmlEntities} entityDecoder
+   * @param {JQuery} jQueryInstance
    * @return {PlaylistParser}
    */
-  static getParser(platform, jQueryStatic, entityDecoder) {
+  static getParser(platform, jQueryInstance) {
     switch (platform) {
-    case 'apple': return new ApplePlaylistParser(jQueryStatic, entityDecoder);
-    case 'pandora': return new PandoraPlaylistParser(jQueryStatic, entityDecoder);
-    case 'spotify': return new SpotifyPlaylistParser(jQueryStatic, entityDecoder);
+    case 'apple': return new ApplePlaylistParser(jQueryInstance);
+    case 'pandora': return new PandoraPlaylistParser(jQueryInstance);
+    case 'spotify': return new SpotifyPlaylistParser(jQueryInstance);
     default: return null;
     }
   }

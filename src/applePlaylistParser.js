@@ -4,27 +4,35 @@ const Playlist = require('./playlist');
 const Track = require('./track');
 
 class ApplePlaylistParser extends PlaylistParser {
-  constructor(jQueryInstance, entityDecoder) {
-    super(jQueryInstance, entityDecoder);
+  constructor(jQueryInstance) {
+    super(jQueryInstance);
   }
 
   getAuthor(playlist) {
-    let result = playlist.find(queries.authorQuery)[0];
-    const text = result.innerHTML.trim();
-    result = text.startsWith('<a') ? result.textContent.trim() : text;
-    return this.entities.decode(result);
+    const result = playlist(queries.authorQuery).get(0);
+    let author = result.children.find((x) => x.name = 'a' && x.firstChild !== null);
+    if (author === undefined)
+      author = result.firstChild.data.trim();
+    else
+      author = author.firstChild.data.trim();
+    return author;
   }
 
   getDescription(playlist) {
-    let result = playlist.find(queries.descriptionQuery);
-    result = result.length > 0 ? this.entities.decode(result[0].textContent.trim()) : null;
-    return result;
+    let result = playlist(queries.descriptionQuery).get(0);
+    if (result === undefined) return null;
+    result = result.children.find((x) => x.name === 'p' && x.firstChild !== null);
+    const description = result.firstChild.data.trim();
+    return description;
   }
 
   getPhoto(playlist) {
-    let result = playlist.find(queries.photoQuery);
-    const source = result.length > 0 ? result[0].children[0] : null;
-    const srcset = source.getAttribute('srcset');
+    let result = playlist(queries.photoQuery);
+    let source = null;
+    if (result.length > 0)
+      source = result.get(0).children.find((x) => x.name = 'source' && x.attribs !== undefined);
+    if (source === null || source === undefined) return null;
+    const srcset = source.attribs.srcset;
     result = srcset.substring(srcset.lastIndexOf('2x,') + 3, srcset.lastIndexOf(' 3x'));
     return result;
   }
@@ -34,17 +42,18 @@ class ApplePlaylistParser extends PlaylistParser {
   }
 
   getTitle(playlist) {
-    const result = playlist.find(queries.titleQuery)[0].innerHTML.trim();
-    return this.entities.decode(result);
+    const result = playlist(queries.titleQuery).get(0).firstChild.data.trim();
+    return result;
   }
 
   getTracks(playlist) {
-    let telegraphedLength = playlist.find(queries.telegraphedLengthQuery)[0];
-    telegraphedLength = parseInt(telegraphedLength.textContent.trim().split(' ')[0]);
-    const tracks = playlist.find(queries.trackQuery);
-    const titles = playlist.find(queries.trackTitleQuery);
-    const artists = playlist.find(queries.trackArtistQuery);
-    const lengths = playlist.find(queries.trackLengthQuery);
+    let telegraphedLength = playlist(queries.telegraphedLengthQuery).get(0);
+    telegraphedLength = telegraphedLength.children.find((x) => x.name === 'p');
+    telegraphedLength = parseInt(telegraphedLength.firstChild.data.trim().split(' ')[0]);
+    const tracks = playlist(queries.trackQuery);
+    const titles = playlist(queries.trackTitleQuery);
+    const artists = playlist(queries.trackArtistQuery);
+    const lengths = playlist(queries.trackLengthQuery);
 
     if (artists.length !== tracks.length || telegraphedLength !== tracks.length)
       throw new Error('This playlist link seems invalid.');
@@ -53,11 +62,11 @@ class ApplePlaylistParser extends PlaylistParser {
 
     tracks.each((i, item) => {
       const track = {};
-      const title = titles[i].innerHTML.trim();
+      const title = titles.get(i).firstChild.data.trim();
       const splitIdx = title.indexOf(' (feat.');
-      track.title = this.entities.decode(splitIdx !== -1 ? title.substring(0, splitIdx) : title);
-      track.artist = this.entities.decode(artists[i].innerHTML.trim().replace(' & ', ', '));
-      track.length = this.timeStringToSeconds(lengths[i].innerHTML);
+      track.title = splitIdx !== -1 ? title.substring(0, splitIdx) : title;
+      track.artist = artists.get(i).firstChild.data.trim().replace(' & ', ', ');
+      track.length = this.timeStringToSeconds(lengths.get(i).firstChild.data);
       track.isExplicit = this.$(item).find(queries.trackIsExplicitQuery).length > 0;
       result.push(new Track(track));
     });
