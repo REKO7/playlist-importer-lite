@@ -12,14 +12,13 @@ I created this as more of a general use extension of a small module I made when 
 - Apple Music
 - Pandora
 
-Planned support for: 
+Planned support for:
 
 - Prime Music
 - Soundcloud
 - Youtube Music
 
 The aforementioned platforms make it a little harder to get data by requesting their webpages with deferred scripts that fill up the webpage _after_ the DOM is loaded and the response is sent. I need to do more research in order to circumvent that.
-
 
 ## Installation
 
@@ -81,7 +80,7 @@ From the request above we can get a full view of the JSON output schema. Only th
 }
 ```
 
-## API 
+## API
 
 - `getPlaylistData(url: string): object` - returns JSON data.
 - `getPlatform(url: string): string|null` - returns the platform, one of `['apple', 'spotify', 'pandora']` or `null`
@@ -90,7 +89,7 @@ Note that the length of each track is given in seconds. Artists are separated by
 
 ## Contributing
 
-Recommended IDE is VS Code. Submit issues/pull requests here. 
+Recommended IDE is VS Code. Submit issues/pull requests here.
 
 Run tests using `npm test`
 
