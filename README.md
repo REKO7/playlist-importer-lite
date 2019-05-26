@@ -82,8 +82,8 @@ From the request above we can get a full view of the JSON output schema. Only th
 
 ## API
 
-- `getPlaylistData(url: string): object` - returns JSON data.
-- `getPlatform(url: string): string|null` - returns the platform, one of `['apple', 'spotify', 'pandora']` or `null`
+- `ImporterStatic.getPlaylistData(url: string): object` - returns JSON data.
+- `ImporterStatic.getPlatform(url: string): string|null` - returns the platform, one of `['apple', 'spotify', 'pandora']` or `null`
 
 Note that the length of each track is given in seconds. Artists are separated by a comma and a space.
 
