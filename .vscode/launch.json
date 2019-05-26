@@ -7,9 +7,19 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Launch Current File",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Launch CLI",
       "program": "${workspaceFolder}/cli.js",
       "args": [
+        "-i",
+        "https://open.spotify.com/playlist/4XMzwJePdl7QRU2q0xe7iL?si=jQM5kk3VTEWNhsFfn-FUZg"
       ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",

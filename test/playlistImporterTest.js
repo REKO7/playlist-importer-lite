@@ -229,5 +229,5 @@ describe('playlistImporter', () =>{
       const result = await importer.getPlaylistData(url);
       assert.deepEqual(result, expected);
     });
-  });
+  }).timeout(5000);
 });
