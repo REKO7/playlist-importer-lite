@@ -25,7 +25,7 @@ if (!process.argv.slice(2).length)
 if (program.input) {
   importer.getPlaylistData(program.input)
     .then((data) => {
-      let output = './';
+      let output = path.resolve(path.normalize('./'));
       let filename = 'importedPlaylist.json';
 
       if (program.output) {
