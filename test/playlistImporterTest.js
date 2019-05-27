@@ -3,6 +3,7 @@ const chaiAsync = require('chai-as-promised');
 chai.use(chaiAsync);
 const { assert, expect } = chai;
 const importer = require('../src/playlistImporter');
+const platforms = require('../src/platforms');
 
 
 describe('playlistImporter', () =>{
@@ -13,10 +14,10 @@ describe('playlistImporter', () =>{
       const pandoraGUrl = 'https://pandora.com/genre/rap-and-hip-hop-pre-game';
       const spotifyUrl = 'https://open.spotify.com/playlist/2n8POxkiNjLibFSTwe4u7p';
 
-      expect(importer.getPlatform(appleUrl)).to.eql('apple');
-      expect(importer.getPlatform(pandoraGUrl)).to.eql('pandora');
-      expect(importer.getPlatform(pandoraPUrl)).to.eql('pandora');
-      expect(importer.getPlatform(spotifyUrl)).to.eql('spotify');
+      expect(importer.getPlatform(appleUrl)).to.eql(platforms.APPLE);
+      expect(importer.getPlatform(pandoraGUrl)).to.eql(platforms.PANDORA);
+      expect(importer.getPlatform(pandoraPUrl)).to.eql(platforms.PANDORA);
+      expect(importer.getPlatform(spotifyUrl)).to.eql(platforms.SPOTIFY);
     });
 
     it('should throw for invalid platforms', () => {

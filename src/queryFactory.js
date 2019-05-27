@@ -1,4 +1,5 @@
 const queries = require('./queries');
+const platforms = require('./platforms');
 
 class QueryFactory {
   /**
@@ -7,9 +8,9 @@ class QueryFactory {
    */
   static getQueries(platform) {
     switch (platform) {
-    case 'apple': return queries.appleQueries;
-    case 'pandora': return queries.pandoraQueries;
-    case 'spotify': return queries.spotifyQueries;
+    case platforms.APPLE: return queries.appleQueries;
+    case platforms.PANDORA: return queries.pandoraQueries;
+    case platforms.SPOTIFY: return queries.spotifyQueries;
     default: return null;
     }
   }

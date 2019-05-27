@@ -1,13 +1,14 @@
 const PlaylistParser = require('./playlistParser');
 const Playlist = require('./playlist');
 const Track = require('./track');
+const platforms = require('../src/platforms');
 
 class SpotifyPlaylistParser extends PlaylistParser {
   constructor(jQueryInstance) {
     super(jQueryInstance);
   }
 
-  jQueryToJson(playlist) {
+  queryToJson(playlist) {
     const script = playlist('script:contains(Spotify = {};)').get(0);
     let data = script.firstChild.data.trim();
     const beginString = 'Spotify.Entity = ';
@@ -16,20 +17,20 @@ class SpotifyPlaylistParser extends PlaylistParser {
   }
 
   getAuthor(playlist) {
-    if (playlist.constructor.name === 'jQuery')
-      playlist = jQueryToJson(playlist);
+    if (playlist.constructor.name === 'initialize')
+      playlist = queryToJson(playlist);
     return playlist.owner.display_name;
   }
 
   getDescription(playlist) {
-    if (playlist.constructor.name === 'jQuery')
-      playlist = jQueryToJson(playlist);
+    if (playlist.constructor.name === 'initialize')
+      playlist = queryToJson(playlist);
     return playlist.description;
   }
 
   getPhoto(playlist) {
-    if (playlist.constructor.name === 'jQuery')
-      playlist = jQueryToJson(playlist);
+    if (playlist.constructor.name === 'initialize')
+      playlist = queryToJson(playlist);
     const img = playlist.images.find((x) => x.height === 640);
     if (undefined === img) {
       if (playlist.images.length > 0)
@@ -39,18 +40,18 @@ class SpotifyPlaylistParser extends PlaylistParser {
   }
 
   getPlatform() {
-    return 'Spotify';
+    return platforms.SPOTIFY;
   }
 
   getTitle(playlist) {
-    if (playlist.constructor.name === 'jQuery')
-      playlist = jQueryToJson(playlist);
+    if (playlist.constructor.name === 'initialize')
+      playlist = queryToJson(playlist);
     return playlist.name;
   }
 
   getTracks(playlist) {
-    if (playlist.constructor.name === 'jQuery')
-      playlist = jQueryToJson(playlist);
+    if (playlist.constructor.name === 'initialize')
+      playlist = queryToJson(playlist);
 
     const tracks = playlist.tracks.items.map((item) => {
       const track = {};
@@ -71,7 +72,7 @@ class SpotifyPlaylistParser extends PlaylistParser {
   }
 
   parsePlaylist(playlist) {
-    const playlistJson = this.jQueryToJson(playlist);
+    const playlistJson = this.queryToJson(playlist);
 
     const result = {};
     result.author = this.getAuthor(playlistJson);

@@ -2,6 +2,7 @@ const PlaylistParser = require('./playlistParser');
 const queries = require('./queries').appleQueries;
 const Playlist = require('./playlist');
 const Track = require('./track');
+const platforms = require('../src/platforms');
 
 class ApplePlaylistParser extends PlaylistParser {
   constructor(jQueryInstance) {
@@ -38,7 +39,7 @@ class ApplePlaylistParser extends PlaylistParser {
   }
 
   getPlatform() {
-    return 'Apple Music';
+    return platforms.APPLE;
   }
 
   getTitle(playlist) {

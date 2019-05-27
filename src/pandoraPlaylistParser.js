@@ -1,13 +1,14 @@
 const PlaylistParser = require('./playlistParser');
 const Playlist = require('./playlist');
 const Track = require('./track');
+const platforms = require('../src/platforms');
 
 class PandoraPlaylistParser extends PlaylistParser {
   constructor(jQueryInstance) {
     super(jQueryInstance);
   }
 
-  jQueryToJson(playlist) {
+  queryToJson(playlist) {
     const script = playlist('script:contains(var launchUrl = )').get(0);
     let data = script.firstChild.data.trim();
     const beginString = 'var storeData = ';
@@ -18,8 +19,8 @@ class PandoraPlaylistParser extends PlaylistParser {
   }
 
   getAuthor(playlist) {
-    if (playlist.constructor.name === 'jQuery')
-      playlist = jQueryToJson(playlist);
+    if (playlist.constructor.name === 'initialize')
+      playlist = queryToJson(playlist);
     const playlistV7 = playlist['v7/playlists/getTracks'];
     let author = null;
     if (undefined !== playlistV7)
@@ -31,8 +32,8 @@ class PandoraPlaylistParser extends PlaylistParser {
   }
 
   getDescription(playlist) {
-    if (playlist.constructor.name === 'jQuery')
-      playlist = jQueryToJson(playlist);
+    if (playlist.constructor.name === 'initialize')
+      playlist = queryToJson(playlist);
     const playlistV7 = playlist['v7/playlists/getTracks'];
     let description = null;
     if (undefined !== playlistV7)
@@ -45,6 +46,8 @@ class PandoraPlaylistParser extends PlaylistParser {
   }
 
   getPhoto(playlist) {
+    if (playlist.constructor.name === 'initialize')
+      playlist = queryToJson(playlist);
     const playlistV1 = playlist['v1/music/genres'];
     let photo = null;
     if (undefined !== playlistV1) {
@@ -58,12 +61,12 @@ class PandoraPlaylistParser extends PlaylistParser {
   }
 
   getPlatform() {
-    return 'Pandora';
+    return platforms.PANDORA;
   }
 
   getTitle(playlist) {
-    if (playlist.constructor.name === 'jQuery')
-      playlist = jQueryToJson(playlist);
+    if (playlist.constructor.name === 'initialize')
+      playlist = queryToJson(playlist);
     const playlistV7 = playlist['v7/playlists/getTracks'];
     let name = null;
     if (undefined !== playlistV7)
@@ -76,8 +79,8 @@ class PandoraPlaylistParser extends PlaylistParser {
   }
 
   getTracks(playlist) {
-    if (playlist.constructor.name === 'jQuery')
-      playlist = jQueryToJson(playlist);
+    if (playlist.constructor.name === 'initialize')
+      playlist = queryToJson(playlist);
     const playlistV7 = playlist['v7/playlists/getTracks'];
     const tracks = [];
 
@@ -115,7 +118,7 @@ class PandoraPlaylistParser extends PlaylistParser {
   }
 
   parsePlaylist(playlist) {
-    const playlistJson = this.jQueryToJson(playlist);
+    const playlistJson = this.queryToJson(playlist);
 
     const result = {};
     result.author = this.getAuthor(playlistJson);
