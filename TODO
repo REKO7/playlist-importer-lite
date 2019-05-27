@@ -1,4 +1,4 @@
-- Support for platforms described in README
+- Support for platforms described in README: currently building a standalone plugin using selenium
 - TravisCI installation
 - Publish test coverage
 - NPM badges
