@@ -1,7 +1,6 @@
-const request = require('axios').default.get;
+const request = require('axios').default;
 const to = require('await-to-js').to;
 const cheerio = require('cheerio');
-const iconv = require('iconv-lite');
 const platforms = require('./platforms');
 const platformChecker = require('./platformChecker');
 const parserFactory = require('./parserFactory');
@@ -51,11 +50,18 @@ class ImporterStatic {
     if ([platforms.PRIME, platforms.SOUNDCLOUD, platforms.YOUTUBE].includes(platform))
       throw new Error('This playlist link is valid but this platform is currently unsupported');
 
-    let [rError, body] = await to(request(formattedUrl));
+    const options = {
+      method: 'get',
+      url: formattedUrl,
+      timeout: 15000,
+      responseType: 'text',
+      responseEncoding: 'utf8',
+    };
+
+    let [rError, body] = await to(request(options));
     if (null !== rError) throw rError;
 
-    body = iconv.decode(Buffer.from(body.data), 'utf8');
-    body = cheerio.load(body, { decodeEntities: true });
+    body = cheerio.load(body.data, { decodeEntities: true });
     const parser = parserFactory.getParser(platform, body);
     const playlist = parser.parsePlaylist(body);
     return playlist;
