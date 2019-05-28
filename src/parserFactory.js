@@ -6,14 +6,14 @@ const platforms = require('./platforms');
 class ParserFactory {
   /**
    * @param {string} platform
-   * @param {JQuery} jQueryInstance
+   * @param {QueryInstance} queryInstance
    * @return {PlaylistParser}
    */
-  static getParser(platform, jQueryInstance) {
+  static getParser(platform, queryInstance) {
     switch (platform) {
-    case platforms.APPLE: return new ApplePlaylistParser(jQueryInstance);
-    case platforms.PANDORA: return new PandoraPlaylistParser(jQueryInstance);
-    case platforms.SPOTIFY: return new SpotifyPlaylistParser(jQueryInstance);
+    case platforms.APPLE: return new ApplePlaylistParser(queryInstance);
+    case platforms.PANDORA: return new PandoraPlaylistParser(queryInstance);
+    case platforms.SPOTIFY: return new SpotifyPlaylistParser(queryInstance);
     default: return null;
     }
   }

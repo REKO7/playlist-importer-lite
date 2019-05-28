@@ -4,8 +4,8 @@ const Track = require('./track');
 const platforms = require('../src/platforms');
 
 class PandoraPlaylistParser extends PlaylistParser {
-  constructor(jQueryInstance) {
-    super(jQueryInstance);
+  constructor(queryInstance) {
+    super(queryInstance);
   }
 
   queryToJson(playlist) {

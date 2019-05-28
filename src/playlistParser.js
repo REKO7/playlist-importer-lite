@@ -5,14 +5,14 @@ const Playlist = require('./playlist');
  */
 class PlaylistParser {
   /**
-   * @param {JQuery} jQueryInstance
+   * @param {QueryInstance} queryInstance
    */
-  constructor(jQueryInstance) {
-    this.$ = jQueryInstance;
+  constructor(queryInstance) {
+    this.$ = queryInstance;
   }
 
   /**
-   * @param {JQuery} playlist
+   * @param {QueryInstance} playlist
    * @return {string}
    */
   getAuthor(playlist) {
@@ -20,7 +20,7 @@ class PlaylistParser {
   }
 
   /**
-   * @param {JQuery} playlist
+   * @param {QueryInstance} playlist
    * @return {string}
    */
   getDescription(playlist) {
@@ -29,7 +29,7 @@ class PlaylistParser {
 
 
   /**
-   * @param {JQuery} playlist
+   * @param {QueryInstance} playlist
    * @return {string}
    */
   getPhoto(playlist) {
@@ -43,7 +43,7 @@ class PlaylistParser {
     return '';
   }
   /**
-   * @param {JQuery} playlist
+   * @param {QueryInstance} playlist
    * @return {string}
    */
   getTitle(playlist) {
@@ -52,7 +52,7 @@ class PlaylistParser {
 
 
   /**
-   * @param {JQuery} playlist
+   * @param {QueryInstance} playlist
    * @return {Array<Track>}
    */
   getTracks(playlist) {
@@ -60,7 +60,7 @@ class PlaylistParser {
   }
 
   /**
-   * @param {JQuery} playlist
+   * @param {QueryInstance} playlist
    * @return {Playlist}
    */
   parsePlaylist(playlist) {
