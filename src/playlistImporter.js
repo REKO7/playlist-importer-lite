@@ -63,7 +63,13 @@ class ImporterStatic {
 
     body = cheerio.load(body.data, { decodeEntities: true });
     const parser = parserFactory.getParser(platform, body);
-    const playlist = parser.parsePlaylist(body);
+
+    let playlist;
+    try {
+      playlist = parser.parsePlaylist(body);
+    } catch (error) {
+      throw new Error(`There was a problem parsing this ${platform} playlist`);
+    }
     return playlist;
   }
 };
