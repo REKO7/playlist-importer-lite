@@ -58,7 +58,7 @@ describe('playlistImporter', () => {
       const expected = {
         title: 'For Eni',
         description: null,
-        photo: null,
+        photo: 'https://is1-ssl.mzstatic.com/image/thumb/9zcdXOMNCrxSkBDlD5hsVw/939x939cc.jpg',
         platform: 'Apple Music',
         author: 'Temiloluwa Segun',
         tracklist: [
