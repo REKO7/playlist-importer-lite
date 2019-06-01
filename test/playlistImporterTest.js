@@ -6,7 +6,7 @@ const importer = require('../src/playlistImporter');
 const platforms = require('../src/platforms');
 
 
-describe('playlistImporter', () =>{
+describe('playlistImporter', () => {
   describe('getPlatform', () => {
     it('should identify correct platforms', () => {
       const appleUrl = 'https://itunes.apple.com/us/playlist/the-a-list-african-music/pl.a0';
@@ -58,7 +58,7 @@ describe('playlistImporter', () =>{
       const expected = {
         title: 'For Eni',
         description: null,
-        photo: 'https://is4-ssl.mzstatic.com/image/thumb/4dYzvPJh_kMbGoZjn4877g/939x939cc.jpg',
+        photo: null,
         platform: 'Apple Music',
         author: 'Temiloluwa Segun',
         tracklist: [
