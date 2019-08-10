@@ -1,4 +1,4 @@
-# playlist-importer
+# playlist-importer-lite
 
 npm package to parse playlist links from common music platforms to JSON.
 
@@ -12,17 +12,17 @@ I created this as more of a general use extension of a small module I made when 
 - Apple Music
 - Pandora
 
-Planned support for:
+For support for:
 
 - Prime Music
 - Soundcloud
 - Youtube Music
 
-The aforementioned platforms make it a little harder to get data by requesting their webpages with deferred scripts that fill up the webpage _after_ the DOM is loaded and the response is sent. I need to do more research in order to circumvent that.
+as well as the platforms supported in this package, see [playlist-importer](). I have split them into two packages, as one uses Selenium/Chromedriver as opposed to simple GET requests to parse data. A more detailed explanation is available [in its README]().
 
 ## Installation
 
-```npm install playlist-importer```
+```npm install playlist-importer-lite```
 
 ## Usage
 
@@ -31,7 +31,7 @@ The aforementioned platforms make it a little harder to get data by requesting t
 This app provides a binary that can import playlist data to a JSON file from a provided link
 
 ```text
-Usage: playlist-importer [options]
+Usage: playlist-importer-lite [options]
 
 Options:
   -V, --version              output the version number
@@ -43,12 +43,12 @@ Options:
 
 ### Example
 
-```playlist-importer -i https://open.spotify.com/user/spotify/playlist/37i9dQZF1DXcBWIGoYBM5M -o ./myImportedPlaylists -f spotifyTodayTopHits```
+```playlist-importer-lite -i https://open.spotify.com/user/spotify/playlist/37i9dQZF1DXcBWIGoYBM5M -o ./myImportedPlaylists -f spotifyTodayTopHits```
 
 ### Programmatic
 
 ```js
-const importer = require('playlist-importer');
+const importer = require('playlist-importer-lite');
 
 importer.getPlaylistData('https://open.spotify.com/user/spotify/playlist/37i9dQZF1DXcBWIGoYBM5M')
   .then((data) => {
@@ -95,7 +95,7 @@ Run tests using `npm test`
 
 Install CLI to test using `npm link`
 
-The TODO file is a good place to start.
+The [TODO](./TODO) file is a good place to start.
 
 ## License
 

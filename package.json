@@ -1,5 +1,5 @@
 {
-  "name": "playlist-importer",
+  "name": "playlist-importer-lite",
   "version": "0.1.4",
   "description": "Return JSON data from playlists on popular music platforms",
   "main": "index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/enioluwa23/playlist-importer.git"
+    "url": "git+https://github.com/enioluwa23/playlist-importer-lite.git"
   },
   "keywords": [
     "music",
@@ -25,12 +25,12 @@
   "author": "Enioluwa Segun",
   "license": "MIT",
   "bin": {
-    "playlist-importer": "./cli.js"
+    "playlist-importer-lite": "./cli.js"
   },
   "bugs": {
-    "url": "https://github.com/enioluwa23/playlist-importer/issues"
+    "url": "https://github.com/enioluwa23/playlist-importer-lite/issues"
   },
-  "homepage": "https://github.com/enioluwa23/playlist-importer#readme",
+  "homepage": "https://github.com/enioluwa23/playlist-importer-lite#readme",
   "dependencies": {
     "await-to-js": "^2.1.1",
     "axios": "^0.18.0",
