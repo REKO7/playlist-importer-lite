@@ -9,7 +9,7 @@ class PandoraPlaylistParser extends PlaylistParser {
   }
 
   queryToJson(playlist) {
-    const script = playlist('script:contains(var launchUrl = )').get(0);
+    const script = playlist('script:contains(storeData)').get(0);
     let data = script.firstChild.data.trim();
     const beginString = 'var storeData = ';
     data = data.substring(data.indexOf(beginString) + beginString.length);
