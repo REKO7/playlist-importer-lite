@@ -18,7 +18,7 @@ For support for:
 - Soundcloud
 - Youtube Music
 
-as well as the platforms supported in this package, see [playlist-importer](). I have split them into two packages, as one uses Selenium/Chromedriver as opposed to simple GET requests to parse data. A more detailed explanation is available [in its README]().
+as well as the platforms supported in this package, see [playlist-importer](https://github.com/enioluwa23/playlist-importer). I have split them into two packages, as one uses Selenium/Chromedriver as opposed to simple GET requests to parse data. A more detailed explanation is available [in its README](https://github.com/enioluwa23/playlist-importer).
 
 ## Installation
 
